@@ -1,0 +1,28 @@
+
+name: HTML Continuous Integration
+
+# When should the workflow execute?
+on:
+  push:
+    branches: [main, v2]
+
+  pull_request:
+    branches: [main]
+
+# Jobs to execute
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Get repository code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Check whether HTML file exists
+      - name: Check HTML file
+        run: test -f index.html
+
+      # Check HTML doctype
+      - name: Validate HTML doctype
+        run: grep -qi '<!doctype html>' index.html
